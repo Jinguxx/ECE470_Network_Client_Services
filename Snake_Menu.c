@@ -38,17 +38,15 @@ gameOption() {
         switch( ch ) {
             case KEY_UP:
                 i--;
-                //i = ( i<0 ) ? 4 : i;
                 if (i == -1){
-					i = 0;
-				}
+			i = 0;
+		}
                 break;
             case KEY_DOWN:
                 i++;
-                //i = ( i>4 ) ? 0 : i;
                 if (i == 3){
-					i = 2;
-				}
+			i = 2;
+		}
                 break;
             default:
                 break;
