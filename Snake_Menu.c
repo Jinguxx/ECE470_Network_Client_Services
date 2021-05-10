@@ -1,10 +1,10 @@
-
 #include <menu.h>
 #include <ncurses.h>
 #include <string.h>
+#include "optionMenus.h"
 
 //menu for game option
-gameOption() {
+void gameMenu() {
     WINDOW *w;
     char list[5][30] = {"Single", 
                         "Multiplayer", 
@@ -38,15 +38,17 @@ gameOption() {
         switch( ch ) {
             case KEY_UP:
                 i--;
+                //i = ( i<0 ) ? 4 : i;
                 if (i == -1){
-			i = 0;
-		}
+					i = 0;
+				}
                 break;
             case KEY_DOWN:
                 i++;
+                //i = ( i>4 ) ? 0 : i;
                 if (i == 3){
-			i = 2;
-		}
+					i = 2;
+				}
                 break;
             default:
                 break;
@@ -61,4 +63,41 @@ gameOption() {
     }
     delwin( w );
     endwin();
+}
+
+void mainMenu(){
+//Create Ncurses Window, with input, no echo and hidden cursor
+    initscr();      
+    cbreak();
+    noecho();
+    start_color();
+    use_default_colors();    
+    curs_set(0);
+
+    WINDOW* win;
+    int HEIGHT = 24;
+    int WIDTH = 80;
+
+    //Set window to new ncurses window
+    win = newwin(HEIGHT, WIDTH, 0, 0);
+
+
+    mvprintw((HEIGHT-20)/2, (WIDTH-58)/2,    "                  _");
+    mvprintw((HEIGHT-20)/2 + 1, (WIDTH-58)/2,"                 | |");
+    mvprintw((HEIGHT-20)/2 + 2, (WIDTH-58)/2,"  ___ _ __   __ _| | _____  ___");
+    mvprintw((HEIGHT-20)/2 + 3, (WIDTH-58)/2," / __| '_ \\ / _` | |/ / _ \\/ __|");
+    mvprintw((HEIGHT-20)/2 + 4, (WIDTH-58)/2," \\__ \\ | | | (_| |   <  __/\\__ \\");
+    mvprintw((HEIGHT-20)/2 + 5, (WIDTH-58)/2," |___/_| |_|\\__,_|_|\\_\\___||___/  ");
+    mvprintw((HEIGHT-20)/2 + 10, (WIDTH-58)/2," Instructions:"); 
+    mvprintw((HEIGHT-20)/2 + 12, (WIDTH-58)/2," - Use the keys w, a, s, d to move your snake.");
+    mvprintw((HEIGHT-20)/2 + 13, (WIDTH-58)/2," - Eat fruit to grow in length.");
+    mvprintw((HEIGHT-20)/2 + 14, (WIDTH-58)/2," - Do not run in to other snakes, the game border"); 
+    mvprintw((HEIGHT-20)/2 + 15, (WIDTH-58)/2,"   or yourself.");
+    mvprintw((HEIGHT-20)/2 + 16, (WIDTH-58)/2," - The first snake to reach length 15 wins!");
+    mvprintw((HEIGHT-20)/2 + 17, (WIDTH-58)/2," - Press '.' to quit at any time.");
+    mvprintw((HEIGHT-20)/2 + 19, (WIDTH-58)/2,"Press any key to start . . ."); 
+    getch();
+    wrefresh(win);
+    gameMenu();
+
 }
